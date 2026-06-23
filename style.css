@@ -1,0 +1,930 @@
+:root {
+    --primary: #c5e1a5;
+    --dark: #081c15;
+    --deep: #1b4332;
+    --accent: #d4a373;
+    --glass: rgba(255, 255, 255, 0.03);
+    --border: rgba(255, 255, 255, 0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+
+body { background: var(--dark); color: #fff; overflow-x: hidden; }
+.loader-wrapper {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--dark); z-index: 9999; display: flex; justify-content: center; align-items: center;
+}
+.loader { width: 50px; height: 50px; border: 3px solid var(--primary); border-top-color: transparent; border-radius: 50%; animation: spin 1s infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.smart-header {
+    position: fixed; top: 20px; width: 100%; z-index: 1000;
+}
+.header-wrap {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 25px 30px;
+    display: flex; justify-content: space-between; align-items: center;
+    width: 90%; margin: auto;
+}
+
+.logo-area { display: flex; align-items: center; gap: 12px; }
+.logo-circle { width: 45px; height: 45px; background: var(--primary); color: var(--dark); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; }
+.brand-name { font-weight: 900; font-size: 1.1rem; }
+.highlight { color: var(--primary); }
+
+.desktop-nav { display: flex; gap: 10px; }
+.nav-link { 
+    color: #f0efef; text-decoration: none; padding: 10px 20px; border-radius: 50px; 
+    font-size: 0.9rem; transition: 0.4s; border: 1px solid transparent;
+}
+.nav-link.active { background: var(--glass); border-color: var(--border); color: var(--primary); font-weight: bold; }
+
+.cta-call { background: var(--primary); color: var(--dark); padding: 10px 25px; border-radius: 50px; text-decoration: none; font-weight: 900; display: flex; align-items: center; gap: 10px; }
+.side-panel {
+    position: fixed; top: 0; right: -100%; width: 350px; height: 100%;
+    background: rgba(8, 28, 21, 0.98); backdrop-filter: blur(30px);
+    z-index: 3000; transition: 0.7s cubic-bezier(1, 0, 0, 1);
+    padding: 100px 50px;
+}
+.side-panel.active { right: 0; }
+.close-panel { position: absolute; top: 30px; left: 30px; font-size: 3rem; cursor: pointer; color: var(--primary); }
+.side-nav a { display: block; color: white; text-decoration: none; font-size: 2rem; font-weight: 900; margin-bottom: 30px; transition: 0.3s; }
+.side-nav a:hover { color: var(--primary); transform: translateX(-15px); }
+.hero-section {
+    height: 100vh; display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden; padding: 20px;
+}
+.hero-background {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: url('images/bg.jpg') center/cover;
+    z-index: -2; animation: scaleBG 20s infinite alternate;
+}
+@keyframes scaleBG { from { transform: scale(1); } to { transform: scale(1.2); } }
+.vignette { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, transparent 20%, var(--dark) 100%); z-index: -1; }
+
+.hero-glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 40px;
+    padding: 60px;
+    max-width: 900px;
+    text-align: center;
+    box-shadow: 0 50px 100px rgba(0,0,0,0.5);
+    animation: cardEntrance 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes cardEntrance { from { opacity: 0; transform: scale(0.8) translateY(100px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+.hero-title { font-size: 4rem; font-weight: 900; margin-bottom: 20px; line-height: 1.2; }
+.gradient-text { background: linear-gradient(90deg, var(--primary), #fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero-para { font-size: 1.2rem; color: #ddd; margin-bottom: 40px; line-height: 2; }
+.glow-btn { padding: 18px 45px; border-radius: 50px; text-decoration: none; font-weight: bold; transition: 0.5s; display: inline-block; margin: 10px; }
+.glow-btn.primary { background: var(--primary); color: var(--dark); box-shadow: 0 0 30px rgba(197, 225, 165, 0.3); }
+.glow-btn.outline { border: 1px solid rgba(255,255,255,0.3); color: #fff; }
+.glow-btn:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.4); }
+.leaf { position: absolute; color: var(--primary); opacity: 0.2; font-size: 3rem; animation: float 6s infinite ease-in-out; }
+.leaf-1 { top: 15%; left: 10%; }
+.leaf-2 { bottom: 20%; right: 10%; animation-delay: 2s; }
+.leaf-3 { top: 70%; left: 15%; animation-delay: 4s; }
+@keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-40px) rotate(45deg); } }
+@media (max-width: 992px) {
+    .desktop-nav, .cta-call { display: none; }
+    .hero-title { font-size: 2.2rem; }
+    .hero-glass-card { padding: 30px; }
+    .header-wrap { border-radius: 20px; }
+}
+
+.menu-trigger { cursor: pointer; display: flex; flex-direction: column; gap: 8px; }
+.line { width: 30px; height: 2px; background: var(--primary); transition: 0.3s; }
+/* 1. حل مشكلة ظهور أيقونة المنيو في الكمبيوتر */
+@media (min-width: 993px) {
+    .menu-trigger {
+        display: none !important; /* إخفاء زرار المنيو الجانبية في الشاشات الكبيرة */
+    }
+}
+.hero-glass-card {
+    margin-top: 100px; /* تحريك البوكس للأسفل (يمكنك زيادة الرقم حسب رغبتك) */
+    position: relative;
+    z-index: 5;
+}
+
+/* تعديل إضافي لضمان التوسط في الموبايل */
+@media (max-width: 992px) {
+    .hero-glass-card {
+        margin-top: 60px; /* في الموبايل نطلعه فوق شوية عشان المساحة */
+    }
+    
+    .menu-trigger {
+        display: flex !important; /* التأكد من ظهورها في الموبايل فقط */
+    }
+}
+/* About Section Styles */
+.about-section {
+    padding: 120px 50px;
+    background: radial-gradient(circle at top left, #103425, #0b251c);
+    color: white;
+    overflow: hidden;
+}
+
+.about-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
+
+/* Visuals: Image Stack Effect */
+.about-visuals { position: relative; }
+.image-stack { position: relative; height: 500px; }
+
+.image-card {
+    position: absolute;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.main-img {
+    width: 80%; height: 400px; z-index: 2; top: 0; right: 0;
+}
+.main-img img { width: 100%; height: 100%; object-fit: cover; }
+
+.sub-img {
+    width: 60%; height: 300px; z-index: 1; bottom: 0; left: 0;
+}
+.sub-img img { width: 100%; height: 100%; object-fit: cover; }
+
+.glass-info-box {
+    position: absolute; bottom: 20px; right: -20px;
+    background: rgba(197, 225, 165, 0.15);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 30px; border-radius: 20px; z-index: 3;
+    text-align: center; width: 200px;
+}
+.years-num { font-size: 3rem; font-weight: 900; color: var(--primary); display: block; }
+
+/* Content Styles */
+.sub-title { color: var(--primary); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; }
+.main-heading { font-size: 2.8rem; line-height: 1.3; margin-bottom: 25px; font-weight: 900; }
+.description { font-size: 1.1rem; line-height: 1.8; color: #ccc; margin-bottom: 30px; }
+
+.features-list { list-style: none; margin-bottom: 40px; }
+.features-list li { margin-bottom: 15px; display: flex; align-items: center; gap: 15px; font-weight: 600; }
+.features-list i { color: var(--primary); font-size: 1.3rem; }
+
+/* Location Hub - العنوان */
+.location-hub {
+    display: flex; align-items: center; gap: 20px;
+    background: rgba(255,255,255,0.05);
+    padding: 20px; border-radius: 20px;
+    border-right: 4px solid var(--primary);
+}
+.hub-icon { font-size: 2rem; color: var(--primary); }
+.hub-text h4 { color: var(--primary); margin-bottom: 5px; }
+
+/* Stats Bar */
+.stats-bar {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 30px; margin-top: 80px; text-align: center;
+    background: rgba(255,255,255,0.03); padding: 40px; border-radius: 30px;
+}
+.stat-num { font-size: 3.5rem; color: var(--primary); margin-bottom: 10px; }
+
+/* Responsive */
+@media (max-width: 992px) {
+    .about-wrapper { grid-template-columns: 1fr; gap: 40px; }
+    .image-stack { height: 400px; margin-bottom: 40px; }
+    .main-heading { font-size: 2rem; }
+    .stats-bar { grid-template-columns: 1fr; }
+}
+:root {
+    --bg-dark: #011612; /* أخضر غامق جداً كأنه أسود فخم */
+    --gold: #d4af37;
+    --neon-lime: #ccff00; /* لمسة لون فاقعة وجديدة */
+    --glass-card: rgba(255, 255, 255, 0.05);
+}
+
+.premium-services {
+    padding: 120px 50px;
+    background: var(--bg-dark);
+    position: relative;
+    overflow: hidden;
+}
+
+/* خلفية حيوية */
+.bg-decoration .circle {
+    position: absolute; border-radius: 50%; filter: blur(80px); z-index: 0;
+}
+.pulse-1 { width: 400px; height: 400px; background: rgba(212, 175, 55, 0.1); top: -100px; left: -100px; }
+.pulse-2 { width: 500px; height: 500px; background: rgba(204, 255, 0, 0.05); bottom: -100px; right: -100px; }
+
+.services-intro { text-align: center; position: relative; z-index: 2; margin-bottom: 80px; }
+.grand-title { font-size: 3.5rem; font-weight: 900; color: white; margin-bottom: 25px; }
+.gold-gradient { background: linear-gradient(to right, #d4af37, #fcf6ba, #d4af37); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.seo-lead-para { color: #aaa; font-size: 1.2rem; max-width: 900px; margin: auto; line-height: 2; }
+
+/* شبكة الكروت العبقرية */
+.ultra-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(450px, 1fr));
+    gap: 40px;
+    position: relative; z-index: 2;
+}
+
+.ultra-card {
+    background: var(--glass-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 40px;
+    padding: 50px;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.ultra-card::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    transform: translateX(-100%); transition: 0.6s;
+}
+
+.ultra-card:hover::before { transform: translateX(100%); }
+
+.ultra-card:hover {
+    transform: translateY(-20px) scale(1.02);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--neon-lime);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+}
+
+.icon-wrap {
+    width: 80px; height: 80px; background: rgba(204, 255, 0, 0.1); 
+    border-radius: 20px; display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem; color: var(--neon-lime); margin-bottom: 30px;
+}
+
+.ultra-card h3 { color: white; font-size: 1.8rem; margin-bottom: 20px; font-weight: 800; }
+.detailed-p { color: #cbd5e1; line-height: 2; font-size: 1.05rem; margin-bottom: 25px; text-align: justify; }
+
+.benefit-tags { display: flex; gap: 10px; list-style: none; flex-wrap: wrap; }
+.benefit-tags span { 
+    background: rgba(212, 175, 55, 0.15); color: var(--gold); 
+    padding: 5px 15px; border-radius: 50px; font-size: 0.8rem; font-weight: bold;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .ultra-grid { grid-template-columns: 1fr; }
+    .grand-title { font-size: 2.2rem; }
+    .ultra-card { padding: 30px; }
+    
+}
+/* Coverage Section Styles */
+.coverage-section {
+    padding: 100px 50px;
+    background: #022c22; /* زمردي عميق جداً */
+    position: relative;
+    overflow: hidden;
+}
+
+.coverage-header { text-align: center; margin-bottom: 70px; }
+.badge { color: var(--gold); font-size: 1.2rem; margin-bottom: 15px; display: block; letter-spacing: 3px; }
+.grand-heading { font-size: 3rem; color: white; font-weight: 900; margin-bottom: 20px; }
+.gold-text { color: var(--gold); }
+.coverage-p { color: #a1a1a1; max-width: 800px; margin: auto; line-height: 2; font-size: 1.1rem; }
+
+/* Grid of Neighborhoods */
+.neighborhoods-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.neighborhood-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 40px 30px;
+    border-radius: 40px;
+    text-align: center;
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.neighborhood-card:hover {
+    transform: translateY(-15px);
+    background: rgba(212, 175, 55, 0.08);
+    border-color: var(--gold);
+}
+
+.neigh-icon {
+    font-size: 3rem;
+    color: var(--gold);
+    margin-bottom: 20px;
+}
+
+.neighborhood-card h3 { color: white; font-size: 1.8rem; margin-bottom: 15px; }
+.neighborhood-card p { color: #ccc; font-size: 0.95rem; line-height: 1.8; margin-bottom: 20px; }
+
+.coverage-tag {
+    background: var(--gold);
+    color: #000;
+    padding: 5px 15px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+/* الأزرار العائمة (Floating Buttons) */
+.floating-actions {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 5000;
+}
+
+.floating-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    font-size: 1.8rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+}
+
+.whatsapp-btn { background: #25d366; }
+.call-btn { background: #d4af37; }
+
+.floating-btn:hover {
+    width: 150px;
+    border-radius: 50px;
+}
+
+.btn-text {
+    display: none;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.floating-btn:hover .btn-text {
+    display: inline-block;
+}
+
+/* الأنميشن الخاص بالأزرار */
+@keyframes pulse-gold {
+    0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
+    70% { box-shadow: 0 0 0 20px rgba(212, 175, 55, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+}
+
+.call-btn { animation: pulse-gold 2s infinite; }
+
+@media (max-width: 768px) {
+    .grand-heading { font-size: 2rem; }
+    .floating-actions { bottom: 20px; left: 20px; }
+    .floating-btn { width: 50px; height: 50px; font-size: 1.5rem; }
+}
+@media (max-width: 768px) {
+    /* 1. تصغير بوكس الهيرو ليتناسب مع الشاشة */
+    .hero-glass-card {
+        width: 95% !important;
+        padding: 25px 15px !important; /* تقليل البادينج الداخلي */
+        margin-top: 20px !important;
+    }
+    
+    .hero-title {
+        font-size: 1.6rem !important; /* تصغير العنوان ليكون على سطرين */
+        line-height: 1.4 !important;
+    }
+
+    .hero-para {
+        font-size: 0.9rem !important; /* تصغير الكلام الكتير عشان مياخدش مساحة */
+        line-height: 1.6 !important;
+        margin-bottom: 20px !important;
+    }
+
+    /* 2. تصغير حجم اسم المؤسسة في الهيدر */
+    .brand-name {
+        font-size: 0.85rem !important;
+        white-space: nowrap; /* منع انقسام الاسم على سطرين */
+    }
+    
+    .logo-circle {
+        width: 35px !important;
+        height: 35px !important;
+        font-size: 1rem !important;
+    }
+
+    /* 3. ضبط بادينج سكشن الخدمات والكروت */
+    .premium-services {
+        padding: 60px 10px !important; /* بادينج خفيف للسكشن */
+    }
+
+    .ultra-card {
+        padding: 25px 20px !important; /* تقليل طول الكرت */
+        margin-bottom: 15px !important;
+        border-radius: 25px !important;
+    }
+
+    .ultra-card h3 {
+        font-size: 1.3rem !important; /* تصغير عناوين الخدمات */
+    }
+
+    .detailed-p {
+        font-size: 0.85rem !important;
+        line-height: 1.6 !important;
+    }
+}
+/* Gallery Section Styles */
+.gallery-section {
+    padding: 100px 0;
+    background: #081c15; /* نفس لون الخلفية الفخم */
+    text-align: center;
+}
+
+.gallery-header {
+    margin-bottom: 50px;
+    padding: 0 5%;
+}
+
+.sub-text-centered { color: var(--gold); letter-spacing: 2px; margin-bottom: 10px; }
+.main-title-centered { font-size: 3rem; font-weight: 900; color: white; margin-bottom: 20px; }
+.centered-line { width: 100px; height: 3px; background: var(--gold); margin: 0 auto 30px; }
+.gallery-intro-p { color: #ccc; max-width: 800px; margin: 0 auto; line-height: 1.8; font-size: 1.1rem; }
+
+/* Grid Container */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* توزيع تلقائي ذكي */
+    gap: 20px;
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto; /* توسيط السكشن بالكامل */
+}
+
+/* Gallery Items */
+.gallery-item {
+    position: relative;
+    height: 300px; /* توحيد الطول لجميع الصور */
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transition: all 0.5s ease;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* جعل الصور تملأ البوكس بنفس الحجم بدون تشويه */
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: brightness(0.8) grayscale(0.2); /* تأثير لطيف قبل التحويم */
+}
+
+/* Hover Effects (الأنيميشن اللطيف بدون نصوص) */
+.gallery-item:hover {
+    transform: translateY(-10px);
+    border-color: var(--gold);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 15px rgba(212, 175, 55, 0.2);
+    z-index: 5;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1); /* زووم بسيط عند التحويم */
+    filter: brightness(1) grayscale(0); /* الصور تنطق بالألوان عند الوقوف عليها */
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .main-title-centered { font-size: 2rem; }
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* صورتين بجانب بعض في الموبايل الصغير */
+        gap: 12px;
+        padding: 10px;
+        width: 100%;
+        margin: 0 auto; /* ضمان التوسيط التام في الموبايل */
+    }
+    .gallery-item {
+        height: 180px; /* تقليل الطول في الموبايل ليتناسب مع العرض */
+        border-radius: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+     .gallery-grid {
+        grid-template-columns: 1fr; /* صورة واحدة كبيرة في الموبايل النحيف جداً لضمان التوسيط */
+        padding: 15px;
+    }
+    .gallery-item {
+        height: 250px;
+    }
+}
+/* Magical Why Section */
+.magical-why-section {
+    padding: 120px 60px;
+    background: linear-gradient(135deg, #0f3d32 0%, #154734 100%); /* أخضر أفتح ومشرق */
+    position: relative;
+    overflow: hidden;
+}
+
+/* الأجرام الضوئية المتحركة في الخلفية */
+.orbs-container {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 0;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(5px);
+    opacity: 0.4;
+    animation: floatingOrb 20s infinite alternate ease-in-out;
+}
+
+.orb-1 { width: 300px; height: 300px; background: #c5e1a5; top: 10%; left: 5%; }
+.orb-2 { width: 400px; height: 400px; background: #d4af37; bottom: 10%; right: 5%; animation-delay: -5s; }
+.orb-3 { width: 250px; height: 250px; background: #2d6a4f; top: 10%; right: 5%; animation-delay: -10s; }
+.orb-4 { width: 350px; height: 350px; background: #52b788; bottom: 10%; left: 5%; animation-delay: -15s; }
+
+@keyframes floatingOrb {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(100px, 150px) scale(1.3); }
+}
+
+.why-header-modern {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    margin-bottom: 80px;
+}
+
+.why-title-main { font-size: 3.5rem; font-weight: 900; color: #fff; margin-bottom: 25px; }
+.highlight-gold { color: #d4af37; text-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
+.why-subtitle-p { color: #e2e8f0; max-width: 900px; margin: auto; line-height: 2; font-size: 1.2rem; }
+
+/* شبكة الكروت (2 في كل سطر) */
+.glass-grid-2-columns {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* عمودين في الكمبيوتر */
+    gap: 40px;
+    position: relative;
+    z-index: 2;
+}
+
+/* الكروت الكريستالية */
+.crystal-card {
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 40px;
+    padding: 50px;
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* حركة اللمعان عند الوقوف على الكرت */
+.shine-layer {
+    position: absolute;
+    top: 0; left: -100%; width: 50%; height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+    transform: skewX(-25deg);
+    transition: 0.7s;
+}
+
+.crystal-card:hover .shine-layer { left: 150%; }
+
+.crystal-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    border-color: #d4af37;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+}
+
+.card-icon-box {
+    width: 70px; height: 70px; background: #d4af37; color: #000;
+    border-radius: 20px; display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; flex-shrink: 0; transition: 0.5s;
+}
+
+.crystal-card:hover .card-icon-box { transform: rotateY(180deg); background: #fff; }
+
+.card-info h3 { color: #fff; font-size: 1.8rem; margin-bottom: 15px; font-weight: 800; }
+.card-info p { color: #cbd5e1; line-height: 1.8; font-size: 1.05rem; text-align: justify; }
+
+/* استجابة الموبايل */
+@media (max-width: 992px) {
+    .glass-grid-2-columns { grid-template-columns: 1fr; } /* عمود واحد في الموبايل */
+    .crystal-card { flex-direction: column; text-align: center; padding: 35px; }
+    .card-icon-box { margin: 0 auto 20px; }
+    .why-title-main { font-size: 2.2rem; }
+}
+/* Contact Ultra Section */
+.contact-ultra-section {
+    padding: 120px 60px ;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    color: #fff;
+}
+
+/* الخلفية الضبابية (Blur Background) */
+.contact-bg-wrapper {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: url('images/about.png') center/cover;
+    filter: blur(10px); /* البلور المطلوب */
+    transform: scale(1.1);
+    z-index: -2;
+}
+
+.contact-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to bottom, rgba(8, 28, 21, 0.8), rgba(0,0,0,0.7));
+    z-index: -1;
+}
+
+.contact-header-box { margin-bottom: 60px; padding: 0 5%; }
+.mini-title { color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px; }
+.contact-main-title { font-size: 3.5rem; font-weight: 900; margin-bottom: 25px; }
+.contact-p-lead { max-width: 800px; margin: auto; line-height: 2; font-size: 1.15rem; color: #cbd5e1; }
+
+/* شبكة الكروت (Grid) */
+.contact-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.glass-contact-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 50px 30px;
+    border-radius: 40px;
+    text-decoration: none;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+}
+
+.wide-card {
+    grid-column: span 2; /* تأخذ العرض بالكامل */
+    flex-direction: row;
+    gap: 40px;
+    padding: 60px;
+    text-align: right;
+}
+
+/* Hover Effect */
+.glass-contact-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--gold);
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+}
+
+.inner-shine {
+    position: absolute;
+    top: 0; left: -100%; width: 50%; height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+    transform: skewX(-30deg);
+    transition: 0.6s;
+}
+
+.glass-contact-card:hover .inner-shine { left: 150%; }
+
+/* Icons & Info */
+.contact-icon {
+    width: 90px; height: 90px;
+    background: var(--gold);
+    color: #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    margin-bottom: 25px;
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+}
+
+.wide-card .contact-icon { margin-bottom: 0; width: 100px; height: 100px; font-size: 3rem; }
+
+.contact-num-display, .location-text {
+    display: block;
+    margin-top: 15px;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--gold);
+}
+
+.location-text { font-size: 1.2rem; }
+
+/* Animations Pulse */
+@keyframes pulse-gold {
+    0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
+    70% { box-shadow: 0 0 0 20px rgba(212, 175, 55, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+}
+.call-pulse { animation: pulse-gold 2s infinite; }
+
+@keyframes wa-glow {
+    0% { background: #d4af37; }
+    50% { background: #25d366; }
+    100% { background: #d4af37; }
+}
+.wa-glow { animation: wa-glow 3s infinite; }
+
+/* Responsive */
+@media (max-width: 992px) {
+    .contact-cards-grid { grid-template-columns: 1fr; }
+    .wide-card { grid-column: span 1; flex-direction: column; text-align: center; padding: 40px; }
+    .contact-main-title { font-size: 2.2rem; }
+    .contact-icon { width: 70px; height: 70px; font-size: 2rem; }
+}
+/* تصغير حجم شبكة الكروت وتوسيطها */
+.contact-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    max-width: 900px; /* هذا الرقم يتحكم في تصغير الكروت، كلما صغر قل حجم الكروت */
+    margin: 0 auto;    /* يضمن بقاء الكروت في منتصف الشاشة بالظبط */
+}
+
+/* تصغير البادينج داخل الكروت لتبدو أصغر وأكثر تناسقاً */
+.glass-contact-card {
+    padding: 35px 20px; /* تقليل المسافات الداخلية */
+}
+
+/* ضبط الكرت العريض ليظل متناسقاً بعد التصغير */
+.wide-card {
+    grid-column: span 2;
+    padding: 35px;
+    gap: 25px;
+}
+
+/* للموبايل: التأكد من أنها تملأ الشاشة بشكل جميل */
+@media (max-width: 768px) {
+    .contact-cards-grid {
+        grid-template-columns: 1fr;
+        max-width: 90%; /* في الموبايل تأخذ مساحة أكبر قليلاً للوضوح */
+    }
+    
+    .wide-card {
+        grid-column: span 1;
+    }
+}
+/* Footer Styles */
+.main-footer {
+    background: linear-gradient(to top, #011612, #022c22);
+    padding: 80px 30px;
+    position: relative;
+    color: #fff;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    margin-bottom: 60px;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--gold);
+    margin-bottom: 25px;
+}
+
+.footer-desc {
+    color: #cbd5e1;
+    line-height: 1.8;
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+}
+.footer-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.footer-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    right: 0;
+    width: 40px;
+    height: 3px;
+    background: var(--gold);
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 15px;
+}
+
+.footer-links a {
+    color: #cbd5e1;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 0.95rem;
+}
+
+.footer-links a:hover {
+    color: var(--gold);
+    padding-right: 10px;
+}
+
+.footer-contact-info .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    color: #cbd5e1;
+    font-size: 0.95rem;
+}
+
+.footer-contact-info i {
+    color: var(--gold);
+    font-size: 1.2rem;
+}
+
+/* Footer Bottom Bar */
+.footer-bottom {
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+    font-size: 0.9rem;
+    color: #94a3b8;
+}
+
+.developer {
+    margin-top: 10px;
+}
+
+.gmt-link {
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 900;
+    transition: 0.3s;
+}
+
+.gmt-link:hover {
+    color: #fff;
+    text-shadow: 0 0 10px var(--gold);
+}
+
+/* Responsive Footer */
+@media (max-width: 992px) {
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .footer-title::after {
+        right: 50%;
+        transform: translateX(50%);
+    }
+    .footer-contact-info .contact-item {
+        justify-content: center;
+    }
+}
